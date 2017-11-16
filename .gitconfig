@@ -1,0 +1,7 @@
+[color]
+	ui = true
+[user]
+	name = AlaaEldin Ahmed
+	email = alaadahmed@gmail.com
+[core]
+	excludesfile = /Users/alaadahmed/.global_ignore

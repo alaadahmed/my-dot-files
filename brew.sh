@@ -34,7 +34,7 @@ brew install bash-completion2
 # Note: don't forget to add `/usr/local/bin/zsh` to `/etc/shells` before
 # running `chsh`.
 brew install zsh
-brew install zsh-completion2
+brew install zsh-completion
 
 # Switch to using brew-installed bash as default shell
 if ! fgrep -q '/usr/local/bin/zsh' /etc/shells; then
@@ -48,3 +48,52 @@ brew install wget --with-iri
 # Install more recent versions of some macOS tools.
 brew install macvim --with-override-system-vim --with-lua --with-python3
 brew install grep
+brew install wget
+
+# Install other useful binaries that I always use.
+brew install httpd
+brew install php71 --with-httpd
+brew install ctags 
+brew install fzf
+brew install git
+brew install git-flow
+brew install heroku
+brew install lua
+brew install macvim --with-override-system-vim --with-lua --with-python3
+brew install node
+brew install yarn
+brew install tree
+brew install imagemagick --with-webp
+brew install rbenv
+brew install sqlite
+brew install autoconf
+
+# Remove outdated versions from Cellar and cleanup.
+brew cleanup
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

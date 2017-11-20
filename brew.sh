@@ -44,3 +44,7 @@ fi;
 
 # Install `wget` with IRI support.
 brew install wget --with-iri
+
+# Install more recent versions of some macOS tools.
+brew install macvim --with-override-system-vim --with-lua --with-python3
+brew install grep

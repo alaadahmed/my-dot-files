@@ -51,7 +51,7 @@ ZSH_THEME="af-magic"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git osx rails)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -69,6 +69,8 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 
+export EDITOR='vim'
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -84,18 +86,22 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 source ~/.aliases
+
 alias fixow='/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user;killall Finder;echo "Open With has been rebuilt, Finder will relaunch"'
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
 export PATH="/usr/local/mysql/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
+
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 # test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"

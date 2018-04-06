@@ -1,13 +1,65 @@
 "#############################################################################"
 "                *** AlaaDAhmed Vimrc Configuration ***                       " 
 "#############################################################################"
-
-set nocompatible                                 " We want the latest Vim settings/options.
-syntax on                                        " We like syntax highlights.
-" set paste
+" We want the latest Vim settings/options.
+set nocompatible
 set nowrap
 set textwidth=100
 set encoding=utf8                                " To allow special characters and icons.
+set lazyredraw
+ 
+" enable syntax and (plugin for netrw)
+syntax enable
+filetype plugin on
+
+" Search down into subfolders.
+" Provides tab-completion for all file-related tasks.
+set path+=**
+
+" Display all matching files when we tab complete.
+set wildmenu
+
+" Ignore files or folders under node_modules.
+set wildignore+=**/node_modules/**
+
+" TAG JUMPING:
+" Create the `tags` file (may need to install ctags first)
+command! MakeTags !ctags -R .
+" NOW WE CAN:
+" - Use ^] to jump to tag under cursor.
+" - Use g^] for ambiguous tags -> will display all instance of that tag.
+" - Use ^t to jump back up the tag stack.
+
+" THINGS TO CONSIDER:
+" This doesn't help if you want a visual list of tags
+
+" AUTOCOMPLETE:
+
+" The good stuff is documented in |ins-completion|
+
+" HIGHLIGHTS:
+" - ^x^n for JUST this file
+" - ^x^f for filenames (works with our path trick! above☝︎)
+" - ^x^] for tags only
+" - ^n for anything specified by the 'complete' option
+
+" NOW WE CAN:
+" - Use ^n and ^p to go back and forth in the suggestion list
+
+" FILE BROWSING:
+" Tweaks for browsing
+let g:netrw_banner=0		" disable annoying banner
+let g:netrw_browse_split=4	" open in prior window
+let g:netrw_altv=1		" open splits to the right
+let g:netrw_liststyle=3		" tree view
+let g:netrw_list_hide=netrw_gitignore#Hide()
+let g:netrw_list_hide.=',\(^\|\s\s\)zs\.\S\+'
+
+" NOW WE CAN:
+" - :edit a folder to open a file browser
+" - <CR>/v/t to open in an h-split/v-split/tab
+" - check |netrw-browse-maps| for more mappings
+
 
 "==============================================================================
 call plug#begin('~/.vim/plugged')                " You could write: `so ~/.vim/plugged.vim`
@@ -16,20 +68,16 @@ call plug#begin('~/.vim/plugged')                " You could write: `so ~/.vim/p
 " ----------------------------
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-vinegar'
-" Plug 'ctrlpvim/ctrlp.vim'
 Plug 'majutsushi/tagbar'                         "Browse tags of current file and its structure.
 Plug 'benmills/vimux'
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } "We already installed fzf using Homebrew!
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-dispatch'
 Plug 'jeetsukumaran/vim-buffergator'
-Plug 'Shougo/deoplete.nvim'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'gilsondev/searchtasks.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'ervandew/supertab'
 Plug 'schickling/vim-bufonly'
 Plug 'wikitopian/hardmode'
@@ -39,9 +87,8 @@ Plug 'tpope/vim-repeat'
 " Generic Programming Supports
 " ----------------------------
 Plug 'mattn/emmet-vim'
+Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary'
-" Plug 'w0rp/ale'                             "Linting Engine -> Lint while you type.
-Plug 'vim-syntastic/syntastic'
 Plug 'sheerun/vim-polyglot'                 "Support for tons of programming languages inside of vim.
 Plug 'ludovicchabant/vim-gutentags'         "Jump to the definition of a method, class or module using Ctrl-].
 Plug 'slashmili/alchemist.vim'              "It exposes module and method definitions to your fingertips.
@@ -62,7 +109,7 @@ Plug 'vim-erlang/vim-erlang-compiler'
 
 " Elixir Support
 " ----------------------------
-Plug 'elixir-lang/vim-elixir'
+Plug 'elixir-editors/vim-elixir'
 Plug 'https://github.com/c-brenn/phoenix.vim'
 Plug 'tpope/vim-projectionist'
 Plug 'mmorearty/elixir-ctags'
@@ -76,8 +123,8 @@ Plug 'ElmCast/elm-vim'
 " ----------------------------
 Plug 'vim-scripts/Improved-AnsiEsc'
 Plug 'ryanoasis/vim-devicons'
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'sjl/badwolf'
 Plug 'bling/vim-bufferline'
 Plug 'tomasr/molokai'
@@ -95,11 +142,10 @@ Plug 'effkay/argonaut.vim'
 Plug 'ajh17/Spacegray.vim'
 Plug 'atelierbram/Base2Tone-vim'
 Plug 'colepeters/spacemacs-theme.vim'
+Plug 'rakr/vim-one'
 
-" All of your plugins must be added before the following line:
 call plug#end()  		                 "required.
 "==============================================================================
-
 
 "==============================================================================
 " THEMES & UI
@@ -111,15 +157,21 @@ set shiftwidth=2
 set smarttab
 set expandtab
 set laststatus=2
-set cursorline
+"set cursorline
 set backspace=indent,eol,start                   " Make <Backspace> works as expected.
 hi LineNr guibg=bg
+
+" Changing cursor shape in different modes
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 if (has("termguicolors"))
   set termguicolors
 endif
 
-colorscheme space-vim-dark
+colorscheme one
+set background=dark
 
 " set foldcolumn=1
 " hi foldcolumn ctermbg=bg
@@ -129,7 +181,7 @@ colorscheme space-vim-dark
 "==============================================================================
 " VARIABLES
 "==============================================================================
-let mapleader = ';'                            " Changing the default <Leader> from '\' to ','
+let mapleader = ';'                            " Changing the default <Leader> from '\' to ';'
 
 "Adding support for different language to use in Code Block in Markdown file.
 let g:markdown_fenced_languages = ['html', 'ruby', 'javascript', 'elixir', 'typescript', 'elm']
@@ -143,9 +195,6 @@ let g:markdown_syntax_conceal = 0
 "==============================================================================
 " Open .vimrc file in new tab for editing.
 nmap <Leader>ev :tabedit $MYVIMRC<CR>
-
-" Open plugins' file for editing in new tab.
-nmap <Leader>ep :tabedit ~/.vim/plugged.vim<CR>
 
 " Hightlight removal shortcut.
 nmap <Leader><Space> :nohlsearch<CR>
@@ -195,11 +244,11 @@ set splitright                                   " Set Vertical split on the rig
 "==============================================================================
 " PLUGINS CONFIGURATIONS
 "==============================================================================
-python3 from powerline.vim import setup as powerline_setup
-python3 powerline_setup()
-python3 del powerline_setup
+" python3 from powerline.vim import setup as powerline_setup
+" python3 powerline_setup()
+" python3 del powerline_setup
 set laststatus=2
-set showtabline=2
+set showtabline=1
 set noshowmode
 
 "----------------------------
@@ -207,7 +256,7 @@ set noshowmode
 "----------------------------
 " let g:airline#extensions#tabline#enabled = 1
 " let g:airline_powerline_fonts = 1
-" let g:airline_theme='deus'
+let g:airline_theme='one'
 
 "----------------------------
 " Vim Gutentags
@@ -231,6 +280,20 @@ nmap ga <Plug>(EasyAlign)
 
 
 "----------------------------
+" UltiSnips
+"----------------------------
+let g:UltiSnipsExpandTrigger='<Tab>'
+let g:UltiSnipsJumpForwardTrigger='<Tab>'
+let g:UltiSnipsJumpBackwordTrigger='<S-Tab>'
+
+
+"----------------------------
+" Deoplete
+"----------------------------
+" let g:deoplete#enable_at_startup = 1
+
+
+"----------------------------
 " HardMode
 "----------------------------
 "HardMode to disable HJKL navigation keys and also Arrow keys.
@@ -246,50 +309,18 @@ let NERDTreeHijackNetrw = 0
 
 
 "----------------------------
-" CtrlP
-"----------------------------
-" CtrlP Mappings
-"nmap <C-R> :CtrlPBufTag<CR>
-"nmap <D-E> :CtrlPMRUFiles<CR>
-
-"let g:ctrlp_custom_ignore = 'node_modules\DS_Store\|git'
-"let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:20,results:20'
-
-""Enhance searching and indexing.
-"if executable('ag')
-"  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-"  let g:ctrlp_user_command =
-"    \ 'ag %s --files-with-matches -g "" --ignore "\.git$\|\.hg$\|\.svn$"'
-
-"  " ag is fast enough that CtrlP doesn't need to cache
-"  let g:ctrlp_use_caching = 0
-"else
-"  " Fall back to using git ls-files if Ag is not available
-"  let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
-"  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
-"endif
-
-
-"----------------------------
-" Vim-Syntastic
-"----------------------------
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" let g:elm_syntastic_show_warnings = 1
-
-
-"----------------------------
 " Neomake settings
 "----------------------------
 autocmd! BufWritePost * Neomake
 let g:neomake_elixir_enabled_makers = ['mix', 'credo', 'dogma']
+" When writing a buffer
+call neomake#configure#automake('w')
 
+" When writing a buffer, and on normal mode changes (after 750ms).
+call neomake#configure#automake('nw', 750)
+
+" When reading a buffer (after 1s), and when writing.
+call neomake#configure#automake('rw', 1000) 
 
 "----------------------------
 " Elixir Tagbar Configuration
@@ -336,6 +367,7 @@ let g:fzf_layout = { 'down': '~40%' }
 " In Neovim, you can set up fzf window using a Vim command
 let g:fzf_layout = { 'window': 'enew' }
 let g:fzf_layout = { 'window': '-tabnew' }
+let g:fzf_layout = { 'window': '10split enew' }
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
@@ -351,3 +383,5 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
+let g:fzf_history_dir = '~/.local/share/fzf-history'

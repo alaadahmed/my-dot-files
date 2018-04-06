@@ -70,7 +70,7 @@ source $ZSH/oh-my-zsh.sh
 # fi
 
 export EDITOR='vim'
-
+export LANG=en_US
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -107,9 +107,6 @@ export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
 export MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
 
-# added by Miniconda3 installer
-export PATH="/Users/alaadahmed/miniconda3/bin:$PATH"
-
 export PATH=/Developer/NVIDIA/CUDA-9.1/bin${PATH:+:${PATH}}
-export DYLD_LIBRARY_PATH=/Developer/NVIDIA/CUDA-9.1/lib\
-                         ${DYLD_LIBRARY_PATH:+:${DYLD_LIBRARY_PATH}}
+export DYLD_LIBRARY_PATH=/Developer/NVIDIA/CUDA-9.1/lib${DYLD_LIBRARY_PATH:+:${DYLD_LIBRARY_PATH}}
+export HOMEBREW_NO_ANALYTICS=1

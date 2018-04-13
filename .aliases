@@ -20,6 +20,7 @@ alias la="ls -lahF ${colorflag}"
 # List only directories
 alias lsd="ls -lhF ${colorflag} | grep --color=never '^d'"
 
+alias hidden="ls -a | grep '^\.'"
 
 # Always enable colored `grep` output
 # Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
